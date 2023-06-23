@@ -1,7 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi
+  name: fastapi-deployment
+  labels:
+    app: fastapi-postgres-demo
 spec:
   replicas: 1
   selector:
@@ -13,8 +15,8 @@ spec:
         app: fastapi
     spec:
       containers:
-        - name: fastapi
-          image: haerschke/fastapi_postgres:tagname
+        - name: fastpi-container
+          image: haerschke/fastapi_postgres:2.0
           env:
           - name: DATABASE_URL
             valueFrom:

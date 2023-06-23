@@ -4,8 +4,11 @@ Code (in src/app) is from https://dev.to/ken_mwaura1/getting-started-with-fast-a
 
 Example DevOps Project with FastApi: https://medium.com/@l.dergham/devops-project-part-4-92d6641ed752
 
-Another larger Example is Jetbrains Fastapi/Docker/Kubernetes Example: 
+Another larger Example is Jetbrains Fastapi/Docker/Kubernetes Example (more K8s stuff like pvc, job, etc.): 
 https://www.jetbrains.com/pycharm/guide/tutorials/fastapi-aws-kubernetes/kubernetes_deploy/, https://github.com/mukulmantosh/FastAPI_EKS_Kubernetes
+
+
+K8s Api Doc: https://kubernetes.io/docs/reference/kubernetes-api/
 
 
 Before looking at a sample GitHub Action, we’ll familiarize ourselves with the syntax and terminology 
@@ -106,3 +109,22 @@ kubectl get svc
 minikube service --url <service_name>
 ```
 Copy the URL of the URL-field in your browser to access it.
+
+
+## TODO:
+change Servername of Postgres DB URL to ServiceName of Postgres-Service and change the fastapi-secret due to the changed Servername
+
+Ingress/NGINX --> change one of them (Ingress is Medium/DevOps project, NGINX is Jetbrains)
+HELM-Package
+
+```bash
+kubectl apply -f db/postgres-secret.yaml
+kubectl apply -f db/postgres-deployment.yaml 
+kubectl apply -f db/postgres-service.yaml
+
+kubectl apply -f app/fastapi-secret.yaml 
+kubectl apply -f app/fastapi-deployment.yaml
+kubectl apply -f app/fastapi-service.yaml 
+
+minikube service --url fastapi-service
+```
