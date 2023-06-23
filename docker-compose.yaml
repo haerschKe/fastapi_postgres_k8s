@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  fastapi_web:
+    container_name: fastapi_web
+    image: fastapi_img
+    build:
+      context: src/
+      dockerfile: Dockerfile
+    ports:
+      - 8002:8000
+    environment:
+      - DATABASE_URL=postgresql://hello_fastapi:hello_fastapi@db/hello_fastapi_dev
+    depends_on:
+      - db
+    networks:
+      - demo
+
+  db:
+    container_name: postgres_db
+    image: postgres:13.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_fastapi
+      - POSTGRES_PASSWORD=hello_fastapi
+      - POSTGRES_DB=hello_fastapi_dev
+    networks:
+      - demo
+
+volumes:
+  postgres_data:
+
+networks:
+  demo:

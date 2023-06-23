@@ -1,0 +1,7 @@
+kubectl apply -f fastapi-secret.yaml
+kubectl apply -f fastapi-deployment.yaml
+kubectl apply -f fastapi-service.yaml
+
+First create the secret
+
+See: https://medium.com/@l.dergham/devops-project-part-4-92d6641ed752

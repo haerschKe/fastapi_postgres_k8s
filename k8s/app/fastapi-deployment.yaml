@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+        - name: fastapi
+          image: haerschke/fastapi_postgres:tagname
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: fastapi-secret
+                key: DB_URL
+          ports:
+            - containerPort: 8000

@@ -1,0 +1,10 @@
+kubectl apply -f postgres-secret.yaml
+kubectl apply -f postgres-deployment.yaml
+kubectl apply -f postgres-service.yaml
+
+First create the secret
+
+See: https://medium.com/@l.dergham/devops-project-part-4-92d6641ed752
+
+The recommended networking service type for Minikube is NodePort
+ClusterIp is the default service type
