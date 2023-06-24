@@ -2,6 +2,8 @@
 This is a basic demo project to deploy a FastApi frontend and Postgres backend on K8s (via Minikube).
 
 ## How to run
+
+Note: the Servername of Postgres DB URL is changed to ServiceName of postgres-service, therefore the fastapi-secret was modified too due to the changed Servername
 ### Deployment without Ingress
 ```bash
 kubectl apply -f db/postgres-secret.yaml
@@ -72,3 +74,7 @@ Clean everything:
 kubectl delete all --all
 kubectl delete all --all -n ingress-nginx
 ```
+
+## ToDo:
+- [ ] HELM
+- [ ] Persistence: PV, PVC, etc.
