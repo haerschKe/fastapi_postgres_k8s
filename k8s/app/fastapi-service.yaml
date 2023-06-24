@@ -5,7 +5,7 @@ metadata:
   labels:
     app: fastapi-postgres-demo
 spec:
-  type: NodePort
+  type: NodePort # For INGRESS ClusterIP can be used as well instead of NodePort
   selector:
     app: fastapi
   ports:
