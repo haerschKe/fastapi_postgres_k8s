@@ -68,15 +68,32 @@ Aftherwards add the Minikube IP to **/etc/hosts**:
 In both cases go to your browser and type **myapp.example.com/docs** to get to the FastAPI Doc.
 
 -------
-
 Clean everything:
 ```bash
 kubectl delete all --all
 kubectl delete all --all -n ingress-nginx
 ```
 
+------
+
+### Deployment with HELM
+When running the basic k8s files be sure to deploy the **db** stuff before the **app** stuff to guarantee that the Postgres DB is running when the app wants to establish a connection. 
+
+When running with HELM this is not guaranteed, therefore an **initContainers** is added to the **app deployment** to wait for until the Postgres DB is up and running before the app establishes the connection to the db.
+
+To run via HELM, do the following:
+```
+cd charts
+helm install myapp-demo fastapi-postgres
+
+minikube tunnel
+
+helm uninstall myapp-demo
+```
+
+-------
+
+
 ## ToDo:
-- [ ] HELM
 - [ ] Persistence: PV, PVC, etc.
 - [ ] ReadinessProbe, LivenessProbe
-- [ ] InitContainer to check if Postgres is accessable
