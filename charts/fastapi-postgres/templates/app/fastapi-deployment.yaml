@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.deploy.name }} #fastapi-deployment
+  labels:
+    app: {{ .Values.app.labels.app }} #fastapi-postgres-demo
+spec:
+  replicas: {{ .Values.app.deploy.replicas }} #1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.deploy.labels.app }} #fastapi
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.deploy.labels.app }} #fastapi
+    spec:
+      containers:
+        - name: {{ .Values.app.deploy.containers.name }} #fastpi-container
+          image: {{ .Values.app.deploy.containers.image }} #haerschke/fastapi_postgres:2.0
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.app.secret.name }} #fastapi-secret
+                key: DB_URL
+          ports:
+            - containerPort: {{ .Values.app.deploy.containers.ports.containerPort }}  #8000

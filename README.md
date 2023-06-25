@@ -44,7 +44,7 @@ kubectl apply -f app/fastapi-ingress-service.yaml
 kubectl apply -f k8s/ingress/my-ingress.yaml 
 ```
 
-### If your on a Mac (with M machine and docker driver) do the following:
+### If you are on a Mac (with M machine and docker driver) do the following:
 
 You won’t be able to access the ingress exposed services via minikube IP. You need to run minikube tunnel to make the service avaiable via local ip **127.0.0.1** instead. You will also need to map **myapp.example.com** (this is the host from my-ingress.yaml) to IP **127.0.0.1** instead of MINIKUBE IP in **/etc/hosts**:
 ```
@@ -56,7 +56,7 @@ minikube tunnel
 ````
 
 -----------
-### If your on any other machine do the following:
+### If you are on any other machine do the following:
 
 Get Minikube IP via  `minikube ip` or `kubectl get ingress` or `kubectl get nodes -o wide`.
 
@@ -78,3 +78,5 @@ kubectl delete all --all -n ingress-nginx
 ## ToDo:
 - [ ] HELM
 - [ ] Persistence: PV, PVC, etc.
+- [ ] ReadinessProbe, LivenessProbe
+- [ ] InitContainer to check if Postgres is accessable

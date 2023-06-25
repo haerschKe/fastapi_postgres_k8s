@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db.deploy.name }} #postgres-deployment
+  labels:
+    app: {{ .Values.db.labels.app }} #fastapi-postgres-demo
+spec:
+  replicas: {{ .Values.db.deploy.replicas }} #1
+  selector:
+    matchLabels:
+      app: {{ .Values.db.deploy.labels.app }} #postgres
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.deploy.labels.app }} #postgres
+    spec:
+      containers:
+        - name: {{ .Values.db.deploy.containers.name }} #postgres-container
+          image: {{ .Values.db.deploy.containers.image }} #postgres:13.1-alpine
+          env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db.secret.name }} #postgres-secret
+                key: POSTGRES_DB
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db.secret.name }} #postgres-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db.secret.name }} #postgres-secret
+                key: POSTGRES_USER
+          ports:
+            - containerPort: {{ .Values.db.deploy.containers.ports.containerPort }} #5432

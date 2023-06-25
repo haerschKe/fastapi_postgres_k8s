@@ -1,0 +1,61 @@
+# Default values for fastapi-postgres.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+app:
+  labels:
+    app: fastapi-postgres-demo
+
+  deploy:
+    name: fastapi-deployment
+    replicas: 1
+    labels:
+      app: fastapi
+    containers:
+      name: fastapi-container
+      image: haerschke/fastapi_postgres:2.0
+      ports:
+        containerPort: 8000
+  
+  service:
+    name: fastapi-service
+    type: NodePort
+    ports:
+      port: 8000
+      targetPort: 8000
+    
+  secret:
+    name: fastapi-secret
+
+
+db:
+  labels:
+    app: fastapi-postgres-demo
+
+  deploy:
+    name: postgres-deployment
+    replicas: 1
+    labels:
+      app: postgres
+    containers:
+      name: postgres-container
+      image: postgres:13.1-alpine
+      ports:
+        containerPort: 5432
+  
+  service:
+    name: postgres-service
+    type: ClusterIP
+    ports:
+      port: 5432
+      targetPort: 5432
+    
+  secret:
+    name: postgres-secret
+
+ingress:
+  name: my-ingress
+  rewrite: /
+  host: myapp.example.com
+  service: fastapi-service
+  port: 8000

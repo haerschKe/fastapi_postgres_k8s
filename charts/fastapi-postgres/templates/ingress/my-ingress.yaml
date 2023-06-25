@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name }} #my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: {{ .Values.ingress.rewrite }} #/
+spec:
+  rules:
+  - host: {{ .Values.ingress.host }} #myapp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.ingress.service }} #fastapi-service
+            port:
+              number: {{ .Values.ingress.port }} #8000

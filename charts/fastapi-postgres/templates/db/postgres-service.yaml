@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.service.name }}  #postgres-service
+  labels:
+    app: {{ .Values.db.labels.app }} #fastapi-postgres-demo
+spec:
+  type: {{ .Values.db.service.type }} #ClusterIP
+  selector:
+    app: {{ .Values.db.deploy.labels.app }} #postgres
+  ports:
+    - name: postgres-service-port
+      port: {{ .Values.db.service.ports.port }} #5432
+      targetPort: {{ .Values.db.service.ports.targetPort }} #5432
